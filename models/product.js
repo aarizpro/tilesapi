@@ -17,6 +17,10 @@ const productSchema = mongoose.Schema(
         productUnitPrice:{
             type: String,
             required:[true,"Enter Shop Details"]
+        },
+        productGstPrice:{
+            type: String,
+            required:[true,"Enter Shop Details"]
         }
     },
     {

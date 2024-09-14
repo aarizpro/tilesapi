@@ -79,11 +79,27 @@ const getCoubyField = asyncHandler(async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+const getMaxInvoiceNumber = asyncHandler(async (req, res) => {
+    try {
+        // Find the invoice with the maximum invNumber by sorting in descending order and limiting the result to 1
+        const maxInvoice = await ProfileDetails.findOne().sort({ invNumber: -1 }).select('invNumber');
+        
+        if (!maxInvoice) {
+            return res.status(404).json({ message: 'No invoices found' });
+        }
+        
+        res.status(200).json({ maxInvNumber: maxInvoice.invNumber });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 module.exports = {
     getCustDetails,
     createCust,
     getCustDetail,
     updateCust,
     deleteCust,
-    getCoubyField
+    getCoubyField,
+    getMaxInvoiceNumber
 }

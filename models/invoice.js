@@ -1,3 +1,4 @@
+const { number } = require("joi");
 const mongoose = require("mongoose");
 
 const invoiceSchema = mongoose.Schema(
@@ -20,8 +21,9 @@ const invoiceSchema = mongoose.Schema(
             required:[true,"Enter Shop Details"]
         },
         invNumber:{
-            type: String,
-            required:[true,"Enter Shop Details"]
+            type: Number,
+            required:[true,"Enter Shop Details"],
+            default:0
         },
         billValue:{
             type: String,
