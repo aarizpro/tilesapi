@@ -1,7 +1,7 @@
-const ProfileDetails = require('../models/invoice')
-const asyncHandler = require('express-async-handler')
+const ProfileDetails = require('../models/invoice');
+const asyncHandler = require('express-async-handler');
 
-const getCustDetails = asyncHandler(async(req, res) => {
+const getCustDetails = asyncHandler(async (req, res) => {
     try {
         const custdetails = await ProfileDetails.find({});
         res.status(200).json(custdetails);
@@ -10,19 +10,20 @@ const getCustDetails = asyncHandler(async(req, res) => {
         throw new Error(error.message);
     }
 });
-const createCust = asyncHandler(async(req, res) => {
+
+const createCust = asyncHandler(async (req, res) => {
     try {
-        const custdetails = await ProfileDetails.create(req.body)
+        const custdetails = await ProfileDetails.create(req.body);
         res.status(200).json(custdetails);
-        
     } catch (error) {
         res.status(500);
         throw new Error(error.message);
     }
-})
-const getCustDetail = asyncHandler(async(req, res) =>{
+});
+
+const getCustDetail = asyncHandler(async (req, res) => {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
         const custdetails = await ProfileDetails.findById(id);
         res.status(200).json(custdetails);
     } catch (error) {
@@ -30,38 +31,37 @@ const getCustDetail = asyncHandler(async(req, res) =>{
         throw new Error(error.message);
     }
 });
-const updateCust = asyncHandler(async(req, res) => {
+
+const updateCust = asyncHandler(async (req, res) => {
     try {
-        const {id} = req.params;
-        const custdetails = await ProfileDetails.findByIdAndUpdate(id, req.body);
-        // we cannot find any product in database
-        if(!custdetails){
+        const { id } = req.params;
+        const custdetails = await ProfileDetails.findByIdAndUpdate(id, req.body, { new: true });
+        if (!custdetails) {
             res.status(404);
-            throw new Error(`cannot find any product with ID ${id}`);
+            throw new Error(`Cannot find any customer with ID ${id}`);
         }
-        const updatedCust = await ProfileDetails.findById(id);
-        res.status(200).json(updatedCust);
-        
+        res.status(200).json(custdetails);
     } catch (error) {
         res.status(500);
         throw new Error(error.message);
     }
 });
-const deleteCust = asyncHandler(async(req, res) =>{
+
+const deleteCust = asyncHandler(async (req, res) => {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
         const custdetails = await ProfileDetails.findByIdAndDelete(id);
-        if(!custdetails){
+        if (!custdetails) {
             res.status(404);
-            throw new Error(`cannot find any product with ID ${id}`);
+            throw new Error(`Cannot find any customer with ID ${id}`);
         }
         res.status(200).json(custdetails);
-        
     } catch (error) {
         res.status(500);
         throw new Error(error.message);
     }
-})
+});
+
 const getCoubyField = asyncHandler(async (req, res) => {
     const { field, value } = req.query;
     try {
@@ -79,20 +79,8 @@ const getCoubyField = asyncHandler(async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
-const getMaxInvoiceNumber = asyncHandler(async (req, res) => {
-    try {
-        // Find the invoice with the maximum invNumber by sorting in descending order and limiting the result to 1
-        const maxInvoice = await ProfileDetails.findOne().sort({ invNumber: -1 }).select('invNumber');
-        
-        if (!maxInvoice) {
-            return res.status(404).json({ message: 'No invoices found' });
-        }
-        
-        res.status(200).json({ maxInvNumber: maxInvoice.invNumber });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
+
+
 
 module.exports = {
     getCustDetails,
@@ -101,5 +89,5 @@ module.exports = {
     updateCust,
     deleteCust,
     getCoubyField,
-    getMaxInvoiceNumber
-}
+   
+};

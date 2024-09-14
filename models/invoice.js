@@ -1,49 +1,46 @@
-const { number } = require("joi");
 const mongoose = require("mongoose");
 
 const invoiceSchema = mongoose.Schema(
     {
-        custName:{
+        custName: {
             type: String,
-            required:[true,"Enter Shop Details"]
+            required: [true, "Enter Shop Details"]
         },
-       
-        custMobile:{
+        custMobile: {
             type: String,
-            required:[true,"Enter Shop Details"]
+            required: [true, "Enter Shop Details"]
         },
-        custGstNo:{
+        custGstNo: {
             type: String,
-            required:[true,"Enter Shop Details"]
+            required: [true, "Enter Shop Details"]
         },
-        invDate:{
+        invDate: {
             type: String,
-            required:[true,"Enter Shop Details"]
+            required: [true, "Enter Shop Details"]
         },
-        invNumber:{
+        invNumber: {
             type: Number,
-            required:[true,"Enter Shop Details"],
-            default:0
+            required: [true, "Enter Shop Details"],
+            default: 0
         },
-        billValue:{
+        billValue: {
             type: String,
-            required:[true,"Enter Shop Details"]
+            required: [true, "Enter Shop Details"]
         },
-        gstAmount:{
+        gstAmount: {
             type: String,
-            required:[true,"Enter Shop Details"]
+            required: [true, "Enter Shop Details"]
         },
-        totalAmount:{
+        totalAmount: {
             type: String,
-            required:[true,"Enter Shop Details"]
+            required: [true, "Enter Shop Details"]
         }
-       
     },
     {
         timestamps: true
     }
-)
+);
 
-const invoiceMaster = mongoose.model("Invoices",invoiceSchema);
+const invoiceMaster = mongoose.model("Invoices", invoiceSchema);
 
-module.exports= invoiceMaster;
+module.exports = invoiceMaster;
